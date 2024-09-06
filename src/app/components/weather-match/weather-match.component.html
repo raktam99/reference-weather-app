@@ -1,7 +1,4 @@
 <div class="wrapper">
-  <h1>Find pairs!</h1>
-  <h2 style="margin-right: auto">Best score: {{ bestScore }}</h2>
-  <h2 style="margin-right: auto">Current score: {{ currentScore }}</h2>
   <div class="game-board">
     <div
       *ngFor="let card of weatherCards"
@@ -15,8 +12,12 @@
       />
     </div>
   </div>
-  <h1>{{ message }}</h1>
-  <button (click)="initGame()" *ngIf="message" class="button">
-    Restart game
-  </button>
+  <div>
+    <h2>Best score: {{ bestScore }}</h2>
+    <h2>Current score: {{ currentScore }}</h2>
+    <h1>{{ message }}</h1>
+    <button (click)="initGame()" *ngIf="message" class="button">
+      Restart game
+    </button>
+  </div>
 </div>

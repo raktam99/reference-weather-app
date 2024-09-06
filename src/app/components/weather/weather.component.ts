@@ -44,7 +44,7 @@ export class WeatherComponent {
           this.weatherData = data;
           localStorage.setItem('savedWeatherData', JSON.stringify(data));
           this.setBackground(this.weatherData.current.isDay);
-        } else this.weatherData = new WeatherData();
+        }
       })
       .then(() => {
         (e.target as HTMLInputElement).value = '';

@@ -72,7 +72,10 @@ export class WeatherComponent {
 
   getFormattedDate(date: Date) {
     const dateObj = new Date(date);
-    return dateObj.toUTCString();
+    return [
+      dateObj.toUTCString().slice(0, 17),
+      dateObj.toUTCString().slice(17, dateObj.toUTCString().length - 3),
+    ];
   }
 
   getImage(code: number, is_day: number = 1) {

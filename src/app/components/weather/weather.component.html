@@ -17,7 +17,8 @@
     <div class="base-info">
       <div style="grid-column-start: 1">
         <h2>{{ weatherData.city }}</h2>
-        <p>{{ getFormattedDate(weatherData.current.time) }}</p>
+        <p>{{ getFormattedDate(weatherData.current.time)[0] }}</p>
+        <p>{{ getFormattedDate(weatherData.current.time)[1] }}</p>
       </div>
       <div style="grid-row-start: 2; margin-left: 20px">
         <h1>{{ roundValue(weatherData.current.temperature2m) }} °C</h1>

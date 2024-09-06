@@ -1,0 +1,82 @@
+.main-content {
+  height: 100vh;
+  width: 100vw;
+  background-image: var(--main-bg-color);
+  //background-image: url("https://myradar.com/static/background-a089d87ba11e1a4c45a8efa960b86092.jpg");
+  background-size: cover; /* Makes the image cover the entire container */
+  background-position: center; /* Centers the image within the container */
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: row;
+}
+
+.full-side-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.side-menu {
+  width: 0;
+  background-color: rgba(47, 79, 79, 0.2);
+  height: 100%;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  padding: 0;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-menu.open {
+  width: 160px;
+}
+
+.hide-button {
+  display: flex;
+  align-items: start;
+}
+
+.weather {
+  flex-grow: 1;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-side-menu button {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.side-menu // General styles for list items as buttons
+ul {
+  list-style: none; // Remove default list styling
+  padding: 0; // Remove default padding
+  margin: 10px;
+
+  li {
+    margin-bottom: 0.5rem; // Space between buttons
+
+    a {
+      display: block; // Make the link fill the list item
+      padding: 0.75rem 1.5rem; // Add padding to make it look like a button
+      text-align: center; // Center the text
+      text-decoration: none; // Remove underline
+      color: #fff; // Text color
+      background-color: #444; // Button background color
+      border-radius: 4px; // Rounded corners
+      font-weight: bold; // Make the text bold
+      transition: background-color 0.3s ease; // Smooth color transition
+
+      &:hover {
+        background-color: #999; // Darker shade for hover effect
+      }
+    }
+  }
+}

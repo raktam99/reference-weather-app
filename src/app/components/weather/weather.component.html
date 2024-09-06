@@ -1,0 +1,148 @@
+<div class="main-div">
+  <div style="display: flex; grid-column-start: 1">
+    <input
+      type="text"
+      placeholder="Search for a city..."
+      class="search-bar"
+      (input)="changeCity($event)"
+      (keyup.enter)="getWeatherData($event)"
+    />
+  </div>
+
+  <div class="card-wrapper" style="grid-column-start: 1">
+    <div class="base-info">
+      <div style="grid-column-start: 1">
+        <h2>{{ weatherData.city }}</h2>
+        <p>{{ getFormattedDate(weatherData.current.time) }}</p>
+      </div>
+      <div style="grid-row-start: 2; margin-left: 20px">
+        <h1>{{ roundValue(weatherData.current.temperature2m) }} °C</h1>
+      </div>
+      <div
+        style="
+          grid-column-start: 2;
+          grid-row-start: 1;
+          grid-row-end: 3;
+          margin-left: auto;
+        "
+      >
+        <div>
+          <img
+            src="{{
+              getImage(
+                weatherData.current.weatherCode,
+                weatherData.current.isDay
+              )
+            }}"
+            style="width: 20vh; height: 20vh"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="card-wrapper"
+    style="grid-column-start: 2; grid-row-start: 2; grid-row-end: 5"
+  >
+    <div class="card">
+      <h2>7 day forecast</h2>
+      <table class="table-separated" style="width: 100%">
+        <tr
+          *ngFor="let date of weatherData.daily.time; let i = index"
+          class="tr-separated"
+        >
+          <td>
+            <p>{{ getDay(date) }}</p>
+          </td>
+          <td>
+            <div style="display: flex; justify-content: center">
+              <img src="{{ getImage(weatherData.daily.weatherCode[i]) }}" />
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; padding: 0">
+              <p style="margin: 0; color: #fff">
+                {{ roundValue(weatherData.daily.temperature2mMax[i]) }}
+              </p>
+              <p style="margin: 0">/</p>
+              <p style="margin: 0; color: #fff">
+                {{ roundValue(weatherData.daily.temperature2mMin[i]) }}
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card-wrapper" style="grid-column-start: 1">
+    <div class="card">
+      <h2>Today's forecast</h2>
+      <div style="display: flex; justify-content: center">
+        <div *ngFor="let date of weatherData.hourly.time; let i = index">
+          <p>{{ getHour(date) }}:00</p>
+          <img
+            src="{{
+              getImage(
+                weatherData.hourly.weatherCode[i],
+                weatherData.hourly.isDay[i]
+              )
+            }}"
+          />
+          <h4>{{ roundValue(weatherData.hourly.temperature2m[i]) }} °C</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-wrapper" style="grid-column-start: 1">
+    <div class="card">
+      <h2>Air conditions</h2>
+      <table style="width: 100%">
+        <tr>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <p>Temp feel:</p>
+              <h4 style="margin: 0; margin-left: 20px">
+                {{ roundValue(weatherData.current.apparentTemperature) }} °C
+              </h4>
+            </div>
+          </td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <p>Wind:</p>
+              <h4 style="margin: 0; margin-left: 20px">
+                {{ roundValue(weatherData.current.windSpeed10m) }} km/h
+              </h4>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <p>Chance of rain:</p>
+              <h4 style="margin: 0; margin-left: 20px">
+                {{ roundValue(weatherData.current.precipitation) }}%
+              </h4>
+            </div>
+          </td>
+          <td>
+            <div
+              style="display: flex; flex-direction: column; align-items: start"
+            >
+              <p>UV index:</p>
+              <h4 style="margin: 0; margin-left: 20px">2000</h4>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

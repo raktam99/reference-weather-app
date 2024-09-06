@@ -11,37 +11,44 @@ import { CommonModule } from '@angular/common';
   styleUrl: './weather.component.scss',
 })
 export class WeatherComponent {
+  isLoading: boolean = false;
   city = 'Nagyvenyim';
   weatherData: WeatherData = new WeatherData();
 
   ngOnInit() {
+    this.isLoading = true;
+
     const savedJSONData = localStorage.getItem('savedWeatherData');
 
     if (savedJSONData) {
       this.weatherData = JSON.parse(savedJSONData);
-      this.setBackground(this.weatherData);
+      this.setBackground(this.weatherData.current.isDay);
+      this.isLoading = false;
     } else {
       getData('nagyvenyim').then((data) => {
         if (data) {
           this.weatherData = data;
-          this.setBackground(this.weatherData);
+          this.setBackground(this.weatherData.current.isDay);
           localStorage.setItem('savedWeatherData', JSON.stringify(data));
+          this.isLoading = false;
         }
       });
     }
   }
 
   getWeatherData(e: Event) {
+    this.isLoading = true;
     getData(this.city)
       .then((data) => {
         if (data) {
           this.weatherData = data;
           localStorage.setItem('savedWeatherData', JSON.stringify(data));
-          this.setBackground(this.weatherData);
+          this.setBackground(this.weatherData.current.isDay);
         } else this.weatherData = new WeatherData();
       })
       .then(() => {
         (e.target as HTMLInputElement).value = '';
+        this.isLoading = false;
       });
   }
 
@@ -72,8 +79,8 @@ export class WeatherComponent {
     return getImageFromCode(code, is_day);
   }
 
-  setBackground(data: WeatherData) {
-    if (data.current.isDay === 0) {
+  setBackground(isDay: number) {
+    if (isDay === 0) {
       document.documentElement.style.setProperty(
         '--main-bg-color',
         'url("https://wallpapercave.com/wp/wp7113104.jpg")'

@@ -14,12 +14,34 @@ interface WeatherCard {
   styleUrl: './weather-match.component.scss',
 })
 export class WeatherMatchComponent implements OnInit {
-  weatherCards: WeatherCard[] = [];
+  icons = [
+    'sun',
+    'cloudy',
+    'storm',
+    'snow',
+    'rain',
+    'moon',
+    'hot',
+    'cold',
+    'sun',
+    'cloudy',
+    'storm',
+    'snow',
+    'rain',
+    'moon',
+    'hot',
+    'cold',
+  ];
+  weatherCards: WeatherCard[] = this.shuffle(
+    this.icons.map((icon) => ({ icon, isFlipped: false }))
+  );
   firstCard: WeatherCard | null = null;
   secondCard: WeatherCard | null = null;
   matchedPairs: number = 0;
   message: string = '';
-  bestScore: number = 0;
+  bestScore: number = localStorage.getItem('bestScore')
+    ? JSON.parse(localStorage.getItem('bestScore')!)
+    : 0;
   currentScore: number = 0;
 
   ngOnInit(): void {
@@ -27,30 +49,11 @@ export class WeatherMatchComponent implements OnInit {
       '--main-bg-color',
       'url("https://w.wallha.com/ws/14/QZI18Wij.png")'
     );
-    this.initGame();
   }
 
   initGame() {
-    const icons = [
-      'sun',
-      'cloudy',
-      'storm',
-      'snow',
-      'rain',
-      'moon',
-      'hot',
-      'cold',
-      'sun',
-      'cloudy',
-      'storm',
-      'snow',
-      'rain',
-      'moon',
-      'hot',
-      'cold',
-    ];
     this.weatherCards = this.shuffle(
-      icons.map((icon) => ({ icon, isFlipped: false }))
+      this.icons.map((icon) => ({ icon, isFlipped: false }))
     );
     this.matchedPairs = 0;
     this.message = '';

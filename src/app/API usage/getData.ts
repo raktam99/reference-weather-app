@@ -45,6 +45,11 @@ export async function getData(city: string) {
   const url = 'https://api.open-meteo.com/v1/forecast';
   const responses = await fetchWeatherApi(url, params);
 
+  if (!responses) {
+    alert('Could not fetch weather data');
+    return null;
+  }
+
   // Helper function to form time ranges
   const range = (start: number, stop: number, step: number) =>
     Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
@@ -160,6 +165,7 @@ async function getLatLongByCity(city: string) {
     })
     .catch((error) => {
       console.error('Error fetching data:', error);
+      alert('Could not fetch location data');
     });
 
   if (lat > 90 && long > 180) return 'no';

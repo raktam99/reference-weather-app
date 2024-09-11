@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class WeatherComponent {
   isLoading: boolean = false;
-  city = 'Nagyvenyim';
+  city = '';
   weatherData: WeatherData = new WeatherData();
 
   ngOnInit() {

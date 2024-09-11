@@ -8,6 +8,7 @@
       type="text"
       placeholder="Search for a city..."
       class="search-bar"
+      value="{{ city }}"
       (input)="changeCity($event)"
       (keyup.enter)="getWeatherData($event)"
     />

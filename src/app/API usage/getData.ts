@@ -17,9 +17,11 @@ interface Codes {
   [key: string]: WeatherImageData;
 }
 
+//Fetches weather data from openmeteo API
 export async function getData(city: string) {
   const latlong = await getLatLongByCity(city);
 
+  //if city not found with given name, returns
   if (latlong === 'no') return null;
 
   const params = {
@@ -111,6 +113,7 @@ export async function getData(city: string) {
 
   const currentDate = new Date().getDate();
 
+  //From hourly weather data, keeps only today's data every 3 hours
   weatherData.hourly.time.forEach((value, index) => {
     if (value.getDate() === currentDate && value.getHours() % 3 === 0) {
       times.push(value);
@@ -139,6 +142,7 @@ export async function getData(city: string) {
   return weatherObject;
 }
 
+//Fetches city coordinates based on city name using Nomatim API
 async function getLatLongByCity(city: string) {
   const nominatimUrl = 'https://nominatim.openstreetmap.org/search';
 
@@ -150,14 +154,12 @@ async function getLatLongByCity(city: string) {
     long = 181;
 
   const response = await fetch(url)
-    .then((response) => response.json()) // Parse the JSON from the response
+    .then((response) => response.json())
     .then((data) => {
       if (data && data.length > 0) {
-        // Extract the latitude and longitude from the first result
         const latitude = data[0].lat;
         const longitude = data[0].lon;
 
-        // You can return the coordinates or do further processing here
         lat = latitude;
         long = longitude;
       } else {
@@ -168,16 +170,16 @@ async function getLatLongByCity(city: string) {
       alert('Could not fetch location data');
     });
 
+  //If city is not found, returns string
   if (lat > 90 && long > 180) return 'no';
 
   return [lat, long];
 }
 
+//Gets image based on weather code
 export function getImageFromCode(code: number, isDay: number = 1) {
-  // Convert the numeric code to a string
   const codeString = code.toString();
 
-  // Assert the `codes` object as `Codes` type
   const weatherData = (codes as Codes)[codeString];
 
   if (isDay === 0) return weatherData.night.image;

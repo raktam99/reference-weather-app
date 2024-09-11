@@ -1,3 +1,5 @@
+//Images for different weather codes
+
 export const codes = {
   '0': {
     day: {

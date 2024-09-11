@@ -16,10 +16,12 @@ export class WeatherComponent {
   weatherData: WeatherData = new WeatherData();
 
   ngOnInit() {
+    //If true, renders a loading overlay
     this.isLoading = true;
 
     const savedJSONData = localStorage.getItem('savedWeatherData');
 
+    //If local storage contains weather data, it loads, if not, it loads Nagyvenyim's weather
     if (savedJSONData) {
       this.weatherData = JSON.parse(savedJSONData);
       this.setBackground(this.weatherData.current.isDay);
@@ -36,7 +38,7 @@ export class WeatherComponent {
     }
   }
 
-  getWeatherData(e: Event) {
+  getWeatherData() {
     this.isLoading = true;
     getData(this.city)
       .then((data) => {
@@ -47,7 +49,8 @@ export class WeatherComponent {
         }
       })
       .then(() => {
-        (e.target as HTMLInputElement).value = '';
+        //Empties the input field
+        this.city = '';
         this.isLoading = false;
       });
   }
